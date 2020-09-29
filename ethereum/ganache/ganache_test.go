@@ -2,6 +2,7 @@ package ganache
 
 import (
 	"fmt"
+	"math/big"
 	"testing"
 )
 
@@ -16,12 +17,31 @@ func InitG() {
 	Gan = New()
 }
 
-func TestNewCli(t *testing.T) {
+func TestGanache_GetBalance(t *testing.T) {
 	InitG()
-	balance, err := Gan.Balance("0x2eE0523b0Aa301A85D897cD2cbC226064dCA4A45", nil)
+	balance, err := Gan.GetBalance("0x2A3eBaD58f30501607171271421CaCb2C3aCB037", nil)
 	if err != nil {
 		fmt.Println("err", err.Error())
 	}
 
 	fmt.Println("balance", balance)
+}
+
+func TestGanache_NewAccount(t *testing.T) {
+	InitG()
+	Gan.NewAccount()
+}
+
+func TestGanache_GetBlock(t *testing.T) {
+	InitG()
+	blockNumber := big.NewInt(0)
+	block, err := Gan.GetBlock(blockNumber)
+	if err != nil {
+		fmt.Println("err", err.Error())
+	}
+
+	//fmt.Printf("header : %+v \n", header)
+	if block != nil {
+		fmt.Printf("block %+v \n", block)
+	}
 }
